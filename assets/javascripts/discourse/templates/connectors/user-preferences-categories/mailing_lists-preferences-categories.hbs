@@ -1,7 +1,10 @@
-<div class="control-group category-notifications">
+<div class="control-group mailing-list-notifications">
     <label class="control-label">{{i18n 'user.mailing_lists'}}</label>
 
-    <div class="controls tracking-controls">
-
-    </div>
+    {{#each model.categories as |category|}}
+        <label class="checkbox-label">
+            {{input type="checkbox"}}
+            {{category.name}}
+        </label>
+    {{/each}}
 </div>
