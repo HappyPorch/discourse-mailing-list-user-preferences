@@ -13,14 +13,16 @@ export default Ember.Component.extend({
         if (!this.categories) {
             const blacklist = Ember.makeArray(this.blacklist);
 
-            // get list of available categories
+            // get list of available categories (exclude any blacklisted or uncategorized)
             const categories = Category.list().filter(category => {
-                return !blacklist.includes(category);
+                return category.id !== 1 && !blacklist.includes(category);
             });
 
             // mark already selected categories as checked
             categories.forEach(function(category) {
-                category.checked = this.selection.includes(category.id);
+                category.checked = this.selection.any(function(selectedCategory) {
+                    return selectedCategory.id === category.id;
+                });
             }, this);
 
             this.set('categories', categories);
@@ -32,13 +34,9 @@ export default Ember.Component.extend({
             // update list of selected categories
             this.set(
                 'selection',
-                this.categories
-                    .filter(function(category) {
-                        return category.checked;
-                    })
-                    .map(function(category) {
-                        return category.id;
-                    })
+                this.categories.filter(function(category) {
+                    return category.checked;
+                })
             );
         }
     }

@@ -1,5 +1,5 @@
 {{#each categories as |category|}}
-    <label class="checkbox-label">
+    <label class="checkbox-label {{if category.parent 'checkbox-label--indent' }}">
         {{input type="checkbox" checked=category.checked change=(action "onChange")}}
         {{category.name}}
     </label>
