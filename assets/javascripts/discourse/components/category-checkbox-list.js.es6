@@ -21,7 +21,7 @@ export default Ember.Component.extend({
             // mark already selected categories as checked
             categories.forEach(function(category) {
                 category.checked = this.selection.includes(category.id);
-            });
+            }, this);
 
             this.set('categories', categories);
         }
