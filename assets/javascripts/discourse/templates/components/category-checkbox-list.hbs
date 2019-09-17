@@ -1,6 +1,6 @@
 {{#each categories as |category|}}
     <label class="checkbox-label">
-        {{input type="checkbox"}}
+        {{input type="checkbox" checked=category.checked change=(action "onChange")}}
         {{category.name}}
     </label>
 {{/each}}

@@ -1,33 +1,45 @@
 import Category from 'discourse/models/category';
 
 export default Ember.Component.extend({
-    categories: null,
+    selection: null,
     blacklist: null,
+    categories: null,
 
     init() {
         this._super(...arguments);
 
-        if (!this.categories) this.set('categories', []);
+        if (!this.selection) this.set('selection', []);
         if (!this.blacklist) this.set('blacklist', []);
+        if (!this.categories) {
+            const blacklist = Ember.makeArray(this.blacklist);
+
+            // get list of available categories
+            const categories = Category.list().filter(category => {
+                return !blacklist.includes(category);
+            });
+
+            // mark already selected categories as checked
+            categories.forEach(function(category) {
+                category.checked = this.selection.includes(category.id);
+            });
+
+            this.set('categories', categories);
+        }
     },
 
-    computeValues() {
-        return Ember.makeArray(this.categories).map(c => c.id);
-    },
-
-    mutateValues(values) {
-        this.set('categories', values.map(v => Category.findById(v)));
-    },
-
-    filterComputedContent(computedContent, computedValues, filter) {
-        const regex = new RegExp(filter, 'i');
-        return computedContent.filter(category => this._normalize(Ember.get(category, 'name')).match(regex));
-    },
-
-    computeContent() {
-        const blacklist = Ember.makeArray(this.blacklist);
-        return Category.list().filter(category => {
-            return this.categories.includes(category) || !blacklist.includes(category);
-        });
+    actions: {
+        onChange() {
+            // update list of selected categories
+            this.set(
+                'selection',
+                this.categories
+                    .filter(function(category) {
+                        return category.checked;
+                    })
+                    .map(function(category) {
+                        return category.id;
+                    })
+            );
+        }
     }
 });
