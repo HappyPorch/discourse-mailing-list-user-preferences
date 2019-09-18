@@ -37,7 +37,7 @@ export default Ember.Component.extend({
             // check if changed category has sub-categories and either check or uncheck all of them
             if (changedCategory.subcategories) {
                 changedCategory.subcategories.forEach(function(category) {
-                    category.checked = changedCategory.checked;
+                    category.set('checked', changedCategory.checked);
                 });
             }
 
