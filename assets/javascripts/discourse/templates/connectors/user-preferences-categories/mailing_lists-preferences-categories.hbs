@@ -1,5 +1,6 @@
 <div class="control-group mailing-list-notifications">
     <label class="control-label">{{i18n 'user.mailing_lists'}}</label>
+    <div class="instructions">{{{i18n 'user.mailing_lists_instructions'}}}</div>
 
     {{category-checkbox-list selection=model.watchedCategories blacklist=selectedCategories}}
 </div>
