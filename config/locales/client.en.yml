@@ -2,4 +2,4 @@ en:
     js:
         user:
             mailing_lists: 'Mailing Lists'
-            mailing_lists_instructions: 'This list displays the mailing list categories available to you.<br/>To subscribe or unsubscribe from a particular category, tick or untick the checkbox next to the category name and click \'Save Changes\'.'
+            mailing_lists_instructions: "This list displays the mailing list categories available to you.<br/>To subscribe or unsubscribe from a particular category, tick or untick the checkbox next to the category name and click 'Save Changes'."
