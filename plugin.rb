@@ -4,6 +4,8 @@
 # authors: HappyPorch
 # url: https://github.com/HappyPorch/discourse-mailing-list-user-preferences/
 
+register_asset 'stylesheets/mailing_lists.scss'
+
 after_initialize do
     
 end
