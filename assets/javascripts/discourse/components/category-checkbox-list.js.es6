@@ -31,6 +31,9 @@ export default Ember.Component.extend({
 
     actions: {
         onChange(changedCategory) {
+            // change the checked status of the current category
+            changedCategory.checked = !changedCategory.checked;
+
             // check if changed category has sub-categories and either check or uncheck all of them
             if (changedCategory.subcategories) {
                 changedCategory.subcategories.forEach(function(category) {
