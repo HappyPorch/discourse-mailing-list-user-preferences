@@ -18,14 +18,32 @@ export default Ember.Component.extend({
                 return category.id !== 1 && !blacklist.includes(category);
             });
 
-            // mark already selected categories as checked
+            const sortedCategories = [];
+
+            // mark already selected categories as checked and sort them in the right order
             categories.forEach(function(category) {
                 category.checked = this.selection.any(function(selectedCategory) {
                     return selectedCategory.id === category.id;
                 });
+
+                if (category.parent_category_id) {
+                    // add it after the parent category
+                    var parentOrSibling = sortedCategories.reverse().find(function(s) {
+                        return s.parent_category_id === category.parent_category_id || s.id === category.parent_category_id;
+                    });
+
+                    sortedCategories.reverse();
+
+                    var i = sortedCategories.indexOf(parentOrSibling);
+
+                    sortedCategories.splice(i + 1, 0, category);
+                } else {
+                    // just add it
+                    sortedCategories.push(category);
+                }
             }, this);
 
-            this.set('categories', categories);
+            this.set('categories', sortedCategories);
         }
     },
 
