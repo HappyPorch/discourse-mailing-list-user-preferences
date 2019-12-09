@@ -38,8 +38,19 @@ export default Ember.Component.extend({
 
                     sortedCategories.splice(i + 1, 0, category);
                 } else {
-                    // just add it
-                    sortedCategories.push(category);
+                    // check if a child category already exists and add it before it
+                    var child = sortedCategories.find(function(s) {
+                        return s.parent_category_id === category.id;
+                    });
+
+                    if (child) {
+                        var i = sortedCategories.indexOf(child);
+
+                        sortedCategories.splice(Math.max(i - 1, 0), 0, category);
+                    } else {
+                        // just add it
+                        sortedCategories.push(category);
+                    }
                 }
             }, this);
 
