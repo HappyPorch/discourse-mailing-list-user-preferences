@@ -1,6 +1,7 @@
+import Component from "@ember/component";
 import Category from 'discourse/models/category';
 
-export default Ember.Component.extend({
+export default Component.extend({
     selection: null,
     blacklist: null,
     categories: null,
