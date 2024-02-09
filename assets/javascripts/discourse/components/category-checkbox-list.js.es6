@@ -1,5 +1,6 @@
 import Component from "@ember/component";
 import Category from 'discourse/models/category';
+import { makeArray } from "discourse-common/lib/helpers";
 
 export default Component.extend({
     selection: null,
@@ -12,7 +13,7 @@ export default Component.extend({
         if (!this.selection) this.set('selection', []);
         if (!this.blacklist) this.set('blacklist', []);
         if (!this.categories) {
-            const blacklist = Ember.makeArray(this.blacklist);
+            const blacklist = makeArray(this.blacklist);
 
             // get list of available categories (exclude any blacklisted or uncategorized)
             const categories = Category.list().filter(category => {
@@ -60,7 +61,7 @@ export default Component.extend({
     },
 
     actions: {
-        onChange(changedCategory) {
+        onChange: (_this, changedCategory) => {
             // change the checked status of the current category
             changedCategory.checked = !changedCategory.checked;
 
@@ -72,9 +73,9 @@ export default Component.extend({
             }
 
             // update list of selected categories
-            this.set(
+            _this.set(
                 'selection',
-                this.categories.filter(function(category) {
+                _this.categories.filter(function(category) {
                     return category.checked;
                 })
             );
